@@ -240,10 +240,10 @@ let get_config db { workdir; process_dir } path_abs =
     let cfg, failures = prepend_config ~dir:workdir directives empty_config in
     (postprocess_config cfg, failures)
   | Error (Dot_protocol.Unexpected_output msg) -> (empty_config, [ msg ])
-  | Error (Dot_protocol.Csexp_parse_error _) ->
+  | Error (Dot_protocol.Csexp_parse_error msg) ->
     ( empty_config
     , [ "ocamllsp could not load its configuration from the external reader. \
-         Building your project with `dune` might solve this issue."
+         Building your project with `dune` might solve this issue. Error: " ^ msg
       ] )
 
 let file_exists fname =
